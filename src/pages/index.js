@@ -7,6 +7,7 @@ import { Grid, Card, Container, Image, Header, Button } from 'semantic-ui-react'
 
 import matt from '../images/matthew.png'
 import { media } from "../components/media";
+import { SubscribeForm } from "../components/SubscribeForm";
 
 class IndexPage extends React.Component {
 
@@ -38,17 +39,43 @@ class IndexPage extends React.Component {
       }
     `;
 
-    const styledJumbotronFooter = styled(Header)`
+    const StyledSubheader = styled.p`
       &&& {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
     `;
+
+    const StyledSubscribeButton = styled.button`
+      &&& {
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 1rem;
+        margin-left: 0.7rem;
+
+        ${media.small`
+
+        `};
+
+        ${media.medium`
+        `};
+      }
+    `
+
+
+    // Mailchimp endpoint
+    // From: https://us17.admin.mailchimp.com/lists/integration/embeddedcode?id=XXXXXX
+    // Where `XXXXXX` is the MC list ID
+    // Note: we change `/post` to `/post-json`
+
+    const MAILCHIMP_URL = `https://gatsbymanor.us17.list-manage.com/subscribe/post-json?u=6d5879814f1b3ecd3667f0c47&amp;id=a66cece897`
 
     return (
       <Container textAlign='center'>
         <Container as={styledJumbotron}>
           <Header as={styledHeader}>Gatsby Manor</Header>
-          <p>Gatsby Starters for all types of projects</p>
+          <StyledSubheader>
+            Gatsby Starters for all types of projects
+          </StyledSubheader>
         </Container>
 
         <Grid centered columns={4}>
@@ -56,7 +83,7 @@ class IndexPage extends React.Component {
             {this.state.links.map((obj, idx) => {
 
               return (
-                <Grid.Column>
+                <Grid.Column key={idx}>
                   <Card key={idx} style={{}}>
                     <Image src={matt} />
                     <Card.Content>
@@ -75,8 +102,18 @@ class IndexPage extends React.Component {
 
         <Container as={styledJumbotron}>
           <Header as={styledHeader}>Join our newsletter!</Header>
-          <p>Get the latest updates!</p>
-          <Button color='blue'>Subscribe</Button>
+          <StyledSubheader>
+            Subscribe for news and updates about Starters
+          </StyledSubheader>
+          <SubscribeForm
+            mailchimp_url={MAILCHIMP_URL}>
+            {(submit) => (
+              <Button type="submit" as={StyledSubscribeButton} color='blue'
+                onClick={(e) => submit(e)}>
+                  Subscribe
+              </Button>
+            )}
+          </SubscribeForm>
         </Container>
       </Container>
     )
