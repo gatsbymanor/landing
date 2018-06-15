@@ -110,8 +110,8 @@ class IndexPage extends React.Component {
 
             <Container>
               <Icon onClick={() => this.handleClick(`https://twitter.com/thegatsbymanor`)} as={StyledIcon} name="twitter" />
-              <Icon onClick={() => this.handleClick(`https://github.com/gatsbymanor`)} as={StyledIcon} name="github" />
-              <Icon onClick={() => this.handleClick(`http://www.medium.com`)} as={StyledIcon} name="mail" />
+              <Icon onClick={() => this.handleClick(`https://github.com/gatsbymanor/www`)} as={StyledIcon} name="github" />
+              <Icon onClick={() => this.handleClick(`http://eepurl.com/dl_n2P`)} as={StyledIcon} name="mail" />
             </Container>
           </Container>
 
