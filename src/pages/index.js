@@ -83,22 +83,6 @@ class IndexPage extends React.Component {
 
     return (
       <div>
-        <Menu secondary>
-
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <SubscribeForm
-                mailchimp_url={MAILCHIMP_URL}>
-                {(submit) => (
-                  <Button type="submit" as={StyledSubscribeButton} color='blue'
-                    onClick={(e) => submit(e)}>
-                      Join our mailing list!
-                  </Button>
-                )}
-              </SubscribeForm>
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
 
         <Container textAlign='center'>
 
