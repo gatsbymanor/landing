@@ -66,8 +66,12 @@ class IndexPage extends React.Component {
     links: starters,
   }
 
-  handleClick = url => {
+  handleClick = (url, gaEvent) => {
     // send event to google analytics
+    // need this because of gatsby rendering
+    if (window.ga) {
+      window.ga('send', gaEvent);
+    }
 
     window.open(url)
   }
@@ -93,9 +97,27 @@ class IndexPage extends React.Component {
             </StyledSubheader>
 
             <Container>
-              <Icon onClick={() => this.handleClick(`https://twitter.com/thegatsbymanor`)} as={StyledIcon} name="twitter" />
-              <Icon onClick={() => this.handleClick(`https://github.com/gatsbymanor/www`)} as={StyledIcon} name="github" />
-              <Icon onClick={() => this.handleClick(`http://eepurl.com/dl_n2P`)} as={StyledIcon} name="mail" />
+              <Icon onClick={() => this.handleClick(`https://twitter.com/thegatsbymanor`, {
+                hitType: 'event',
+                eventCategory: 'social_networks',
+                eventAction: `visit_twitter`,
+                eventLabel: 'visit_external_link',
+                transport: 'beacon',
+              })} as={StyledIcon} name="twitter" />
+              <Icon onClick={() => this.handleClick(`https://github.com/gatsbymanor/www`, {
+                hitType: 'event',
+                eventCategory: 'social_networks',
+                eventAction: `visit_github`,
+                eventLabel: 'visit_external_link',
+                transport: 'beacon',
+              })} as={StyledIcon} name="github" />
+              <Icon onClick={() => this.handleClick(`http://eepurl.com/dl_n2P`, {
+                hitType: 'event',
+                eventCategory: 'social_networks',
+                eventAction: `visit_mailchimp_form`,
+                eventLabel: 'visit_external_link',
+                transport: 'beacon',
+              })} as={StyledIcon} name="mail" />
             </Container>
           </Container>
 
@@ -112,12 +134,24 @@ class IndexPage extends React.Component {
                         <Card.Description>{obj.perks}</Card.Description>
                       </Card.Content>
                       <Card.Content extra>
-                        <a onClick={() => this.handleClick(obj.source)}>
+                        <a onClick={() => this.handleClick(obj.source, {
+                          hitType: 'event',
+                          eventCategory: 'starter',
+                          eventAction: `download_${obj.name}`,
+                          eventLabel: 'starters_desirability_test',
+                          transport: 'beacon',
+                        })}>
                           <Button basic color='blue' fluid>Download</Button>
                         </a>
                       </Card.Content>
                       <Card.Content extra>
-                        <a onClick={() => this.handleClick(obj.demo)}>
+                        <a onClick={() => this.handleClick(obj.demo, {
+                          hitType: 'event',
+                          eventCategory: 'starter',
+                          eventAction: `demo_${obj.name}`,
+                          eventLabel: 'starters_desirability_test',
+                          transport: 'beacon',
+                        })}>
                           <Button basic color='green' fluid>Demo</Button>
                         </a>
                       </Card.Content>
