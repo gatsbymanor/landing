@@ -10,10 +10,8 @@ import {
   Image,
   Header,
   Button,
-  Menu
 } from 'semantic-ui-react'
 
-import { media } from "../components/media";
 import { SubscribeForm } from "../components/SubscribeForm";
 import { starters } from "../data/starters";
 
@@ -134,7 +132,7 @@ class IndexPage extends React.Component {
                         <Card.Description>{obj.perks}</Card.Description>
                       </Card.Content>
                       <Card.Content extra>
-                        <a onClick={() => this.handleClick(obj.source, {
+                        <a href="#_blank" onClick={() => this.handleClick(obj.source, {
                           hitType: 'event',
                           eventCategory: 'starter',
                           eventAction: `download_${obj.name}`,
@@ -145,7 +143,7 @@ class IndexPage extends React.Component {
                         </a>
                       </Card.Content>
                       <Card.Content extra>
-                        <a onClick={() => this.handleClick(obj.demo, {
+                        <a href="#_blank" onClick={() => this.handleClick(obj.demo, {
                           hitType: 'event',
                           eventCategory: 'starter',
                           eventAction: `demo_${obj.name}`,

@@ -1,8 +1,6 @@
 import React from "react"
 import jsonp from "jsonp"
 import { validate } from "email-validator"
-import styled from "styled-components"
-import { media } from "./media";
 
 class SubscribeForm extends React.Component {
   constructor() {
