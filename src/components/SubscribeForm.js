@@ -84,7 +84,7 @@ class SubscribeForm extends React.Component {
         color: 'black'
       }}>
         {this.state.status === `success` ? (
-          <div>Thank you! We'll email you next announcements.</div>
+          <div>{this.props.success_msg}</div>
         ) : (
           <div>
             <form method="post" noValidate>

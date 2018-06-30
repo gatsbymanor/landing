@@ -12,17 +12,14 @@ import {
   Button,
 } from 'semantic-ui-react'
 
-import { SubscribeForm } from "../components/SubscribeForm";
 import { starters } from "../data/starters";
+import { Link } from "gatsby";
 
 
 const styledJumbotron = styled(Container)`
   margin: 5rem auto auto auto;
 `;
 
-const styledJumbotronFooter = styled(Container)`
-  margin: 5rem auto 8rem auto;
-`;
 
 const styledHeader = styled(Header)`
   &&& {
@@ -35,15 +32,6 @@ const StyledSubheader = styled.p`
     font-size: 1.5rem;
   }
 `;
-
-const StyledSubscribeButton = styled.button`
-  &&& {
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 1rem;
-    margin-left: 0.7rem;
-  }
-`
 
 const StyledCard = styled.div`
   &&& {
@@ -64,7 +52,7 @@ class IndexPage extends React.Component {
     links: starters,
   }
 
-  handleClick = (url, gaEvent) => {
+  trackExternalClick = (url, gaEvent) => {
     // send event to google analytics
     // need this because of gatsby rendering
     if (window.ga) {
@@ -74,14 +62,29 @@ class IndexPage extends React.Component {
     window.open(url)
   }
 
+  trackClick = (gaEvent) => {
+    if (window.ga) {
+      window.ga('send', gaEvent);
+    }
+  }
+
   render() {
 
-    // Mailchimp endpoint
-    // From: https://us17.admin.mailchimp.com/lists/integration/embeddedcode?id=XXXXXX
-    // Where `XXXXXX` is the MC list ID
-    // Note: we change `/post` to `/post-json`
+    const twitterEvent = {
+      hitType: 'event',
+      eventCategory: 'social_networks',
+      eventAction: `visit_twitter`,
+      eventLabel: 'visit_external_link',
+      transport: 'beacon',
+    }
 
-    const MAILCHIMP_URL = `https://gatsbymanor.us17.list-manage.com/subscribe/post-json?u=6d5879814f1b3ecd3667f0c47&amp;id=a66cece897`
+    const subscribeEvent = {
+      hitType: 'event',
+      eventCategory: 'social_networks',
+      eventAction: `visit_mailchimp_form`,
+      eventLabel: 'visit_external_link',
+      transport: 'beacon',
+    }
 
     return (
       <div>
@@ -91,89 +94,60 @@ class IndexPage extends React.Component {
           <Container as={styledJumbotron}>
             <Header as={styledHeader}>Gatsby Manor</Header>
             <StyledSubheader>
-              Gatsby Starters for all types of projects
+              Professional design Gatsby starters at afforable prices.
             </StyledSubheader>
-
-            <Container>
-              <Icon onClick={() => this.handleClick(`https://twitter.com/thegatsbymanor`, {
-                hitType: 'event',
-                eventCategory: 'social_networks',
-                eventAction: `visit_twitter`,
-                eventLabel: 'visit_external_link',
-                transport: 'beacon',
-              })} as={StyledIcon} name="twitter" />
-              <Icon onClick={() => this.handleClick(`https://github.com/gatsbymanor/www`, {
-                hitType: 'event',
-                eventCategory: 'social_networks',
-                eventAction: `visit_github`,
-                eventLabel: 'visit_external_link',
-                transport: 'beacon',
-              })} as={StyledIcon} name="github" />
-              <Icon onClick={() => this.handleClick(`http://eepurl.com/dl_n2P`, {
-                hitType: 'event',
-                eventCategory: 'social_networks',
-                eventAction: `visit_mailchimp_form`,
-                eventLabel: 'visit_external_link',
-                transport: 'beacon',
-              })} as={StyledIcon} name="mail" />
-            </Container>
           </Container>
 
           <Grid centered columns={1}>
             <Grid.Row>
               {this.state.links.map((obj, idx) => {
+                const { name, demo, perks, image, } = obj;
+
+                const viewStarterEvent = {
+                  hitType: 'event',
+                  eventCategory: 'starters',
+                  eventAction: `view_${name}`,
+                  eventLabel: 'buy_test_2018_06_30',
+                  transport: 'beacon',
+                }
+
+                const buyStarterEvent = {
+                 hitType: 'event',
+                 eventCategory: 'starters',
+                 eventAction: `buy_${name}`,
+                 eventLabel: 'buy_test_2018_06_30',
+                 transport: 'beacon',
+               }
 
                 return (
                   <Grid.Column key={idx}>
                     <Card key={idx} as={StyledCard}>
-                      <Image src={obj.image} />
+                      <Image src={image} />
                       <Card.Content>
-                        <Card.Header>{obj.name}</Card.Header>
-                        <Card.Description>{obj.perks}</Card.Description>
+                        <Card.Header>{name}</Card.Header>
+                        <Card.Description>{perks}</Card.Description>
                       </Card.Content>
                       <Card.Content extra>
-                        <a href="#_blank" onClick={() => this.handleClick(obj.source, {
-                          hitType: 'event',
-                          eventCategory: 'starter',
-                          eventAction: `download_${obj.name}`,
-                          eventLabel: 'starters_desirability_test',
-                          transport: 'beacon',
-                        })}>
-                          <Button basic color='blue' fluid>Download</Button>
-                        </a>
-                      </Card.Content>
-                      <Card.Content extra>
-                        <a href="#_blank" onClick={() => this.handleClick(obj.demo, {
-                          hitType: 'event',
-                          eventCategory: 'starter',
-                          eventAction: `demo_${obj.name}`,
-                          eventLabel: 'starters_desirability_test',
-                          transport: 'beacon',
-                        })}>
+                        <Link to={demo} onClick={() => { this.trackClick(viewStarterEvent) }}>
                           <Button basic color='green' fluid>Demo</Button>
-                        </a>
+                        </Link>
+                      </Card.Content>
+                      <Card.Content extra>
+                        <Button basic color='blue' fluid onClick={() => { this.trackExternalClick("http://eepurl.com/dzJSxL", buyStarterEvent) }}>Buy now</Button>
                       </Card.Content>
                     </Card>
+
                   </Grid.Column>
                 )
               })}
             </Grid.Row>
           </Grid>
 
-          <Container as={styledJumbotronFooter}>
-            <Header as={styledHeader}>Join our newsletter!</Header>
-            <StyledSubheader>
-              Subscribe for news and updates about Starters
-            </StyledSubheader>
-            <SubscribeForm
-              mailchimp_url={MAILCHIMP_URL}>
-              {(submit) => (
-                <Button type="submit" as={StyledSubscribeButton} color='blue'
-                  onClick={(e) => submit(e)}>
-                    Subscribe
-                </Button>
-              )}
-            </SubscribeForm>
+          <Container as={styledJumbotron}>
+            <Container>
+              <Icon onClick={() => this.trackExternalClick(`https://twitter.com/thegatsbymanor`, twitterEvent)} as={StyledIcon} name="twitter" />
+              <Icon onClick={() => this.trackExternalClick(`http://eepurl.com/dzJSxL`, subscribeEvent)} as={StyledIcon} name="mail" />
+            </Container>
           </Container>
         </Container>
       </div>
