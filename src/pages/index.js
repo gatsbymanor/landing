@@ -10,10 +10,13 @@ import {
   Image,
   Header,
   Button,
+  Form,
+  Modal,
 } from 'semantic-ui-react'
 
 import { starters } from "../data/starters";
 import { Link } from "gatsby";
+import axios from "axios";
 
 
 const styledJumbotron = styled(Container)`
@@ -46,10 +49,23 @@ const StyledIcon = styled.i`
   }
 `
 
+const encode = (data) => {
+  return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+}
+
 class IndexPage extends React.Component {
 
   state = {
     links: starters,
+    name: "",
+    email: "",
+    price: "",
+    message: "",
+    open: false,
+    experiment: "buy_test_2018_06_30",
+
   }
 
   trackExternalClick = (url, gaEvent) => {
@@ -67,6 +83,39 @@ class IndexPage extends React.Component {
       window.ga('send', gaEvent);
     }
   }
+
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    axios({
+      method: 'post',
+      url: '/',
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      data: encode({ "form-name": this.state.experiment, ...this.state })
+    })
+    .then(function (response) {
+      console.log(response.status);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+
+    this.close()
+
+  }
+
+  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  handleBuyClick = (gaEvent) => {
+
+    this.show()
+    this.trackClick(gaEvent)
+  }
+
+  show = () => this.setState({ open: true })
+
+  close = () => this.setState({ open: false })
 
   render() {
 
@@ -101,13 +150,14 @@ class IndexPage extends React.Component {
           <Grid centered columns={1}>
             <Grid.Row>
               {this.state.links.map((obj, idx) => {
-                const { name, demo, perks, image, } = obj;
+                const { name, demo, perks, image } = obj;
+                const { price, email, message, open, experiment } = this.state
 
                 const viewStarterEvent = {
                   hitType: 'event',
                   eventCategory: 'starters',
                   eventAction: `view_${name}`,
-                  eventLabel: 'buy_test_2018_06_30',
+                  eventLabel: experiment,
                   transport: 'beacon',
                 }
 
@@ -115,7 +165,7 @@ class IndexPage extends React.Component {
                  hitType: 'event',
                  eventCategory: 'starters',
                  eventAction: `buy_${name}`,
-                 eventLabel: 'buy_test_2018_06_30',
+                 eventLabel: experiment,
                  transport: 'beacon',
                }
 
@@ -133,7 +183,44 @@ class IndexPage extends React.Component {
                         </Link>
                       </Card.Content>
                       <Card.Content extra>
-                        <Button basic color='blue' fluid onClick={() => { this.trackExternalClick("http://eepurl.com/dzJSxL", buyStarterEvent) }}>Buy now</Button>
+                        <Button onClick={() => this.handleBuyClick(buyStarterEvent)} basic color='blue' fluid>Buy now</Button>
+
+                        <Modal size={'small'} open={open} onClose={this.close}>
+                          <Modal.Header>Hi! You caught us before we are ready.</Modal.Header>
+
+                          <Modal.Content>
+                            <p>
+                              We're working to hard to get you a high quality starter at a fair price.
+                              If you'd like us to send you a reminder when we're ready, tell us your desired
+                              price and your email.
+                            </p>
+
+                            <Form
+                              name={this.state.experiment}
+                              method="post"
+                              data-netlify="true"
+                              data-netlify-honeypot="bot-field"
+                              onSubmit={(e) => this.handleSubmit(e)}>
+
+                              <input type="hidden" name="form-name" value={this.state.experiment} />
+                              <Form.Field>
+                                <label>What do you want to pay? (in USD)</label>
+                                <input type="number" name="price" value={price} min="0" max="10000" onChange={this.handleChange} placeholder='99' />
+                              </Form.Field>
+                              <Form.Field>
+                                <label>Email (optional)</label>
+                                <input type="email" name="email" value={email} onChange={this.handleChange} placeholder='me@email.com'  />
+                              </Form.Field>
+                              <Form.Field>
+                                <label>Send us a note (optional)</label>
+                                <input type="text" name="message" value={message} onChange={this.handleChange} placeholder='Message' />
+                              </Form.Field>
+
+                              <Button type="submit" basic color='blue'>Notify me</Button>
+                            </Form>
+                          </Modal.Content>
+
+                        </Modal>
                       </Card.Content>
                     </Card>
 
