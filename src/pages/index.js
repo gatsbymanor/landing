@@ -64,7 +64,7 @@ class IndexPage extends React.Component {
     price: "",
     message: "",
     open: false,
-    experiment: "buy_test_2018_06_30",
+    experiment: "buy_test_2018_07_06",
 
   }
 
