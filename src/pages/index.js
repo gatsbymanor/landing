@@ -7,7 +7,6 @@ import {
   Icon,
   Card,
   Container,
-  Image,
   Header,
   Button,
   Form,
@@ -15,7 +14,8 @@ import {
 } from 'semantic-ui-react'
 
 import { starters } from "../data/starters";
-import { Link } from "gatsby";
+import Img from "gatsby-image";
+import { Link, graphql } from "gatsby";
 import axios from "axios";
 
 
@@ -150,8 +150,9 @@ class IndexPage extends React.Component {
           <Grid centered columns={1}>
             <Grid.Row>
               {this.state.links.map((obj, idx) => {
-                const { name, demo, perks, image } = obj;
+                const { name, demo, perks } = obj;
                 const { price, email, message, open, experiment } = this.state
+                const { EventuallyImage } = this.props.data
 
                 const viewStarterEvent = {
                   hitType: 'event',
@@ -172,7 +173,11 @@ class IndexPage extends React.Component {
                 return (
                   <Grid.Column key={idx}>
                     <Card key={idx} as={StyledCard}>
-                      <Image src={image} />
+                      <Img
+                        title="Eventually gatsby starter"
+                        alt="Thumnail image of Eventually gatsby starter"
+                        sizes={EventuallyImage.sizes}
+                      />
                       <Card.Content>
                         <Card.Header>{name}</Card.Header>
                         <Card.Description>{perks}</Card.Description>
@@ -245,3 +250,13 @@ class IndexPage extends React.Component {
 
 
 export default IndexPage
+
+export const pageQuery = graphql`
+  query EventuallyImageQuery {
+    EventuallyImage: imageSharp(id: { regex: "/eventually.jpg/" }) {
+      sizes(maxWidth: 640 ) {
+        ...GatsbyImageSharpSizes
+      }
+    }
+  }
+`
