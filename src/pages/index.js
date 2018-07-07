@@ -184,11 +184,11 @@ class IndexPage extends React.Component {
                       </Card.Content>
                       <Card.Content extra>
                         <Link to={demo} onClick={() => { this.trackClick(viewStarterEvent) }}>
-                          <Button basic color='green' fluid>Demo</Button>
+                          <Button basic color='green' fluid>View Demo</Button>
                         </Link>
                       </Card.Content>
                       <Card.Content extra>
-                        <Button onClick={() => this.handleBuyClick(buyStarterEvent)} basic color='blue' fluid>Buy now</Button>
+                        <Button onClick={() => this.handleBuyClick(buyStarterEvent)} basic color='blue' fluid>Buy Starter</Button>
 
                         <Modal size={'small'} open={open} onClose={this.close}>
                           <Modal.Header>Hi! You caught us before we are ready.</Modal.Header>
