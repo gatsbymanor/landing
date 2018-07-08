@@ -1,6 +1,8 @@
 import 'semantic-ui-css/semantic.min.css';
 
 import React from 'react'
+import Img from "gatsby-image"
+import axios from "axios"
 import styled from "styled-components";
 import {
   Grid,
@@ -11,12 +13,13 @@ import {
   Button,
   Form,
   Modal,
+  Menu,
 } from 'semantic-ui-react'
 
-import { starters } from "../data/starters";
-import Img from "gatsby-image";
-import { Link, graphql } from "gatsby";
-import axios from "axios";
+import { starters } from "../data/starters"
+import { SubscribeForm } from "../components/SubscribeForm"
+import { Link, graphql } from "gatsby"
+
 
 
 const styledJumbotron = styled(Container)`
@@ -26,7 +29,7 @@ const styledJumbotron = styled(Container)`
 
 const styledHeader = styled(Header)`
   &&& {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
   }
 `;
 
@@ -135,24 +138,73 @@ class IndexPage extends React.Component {
       transport: 'beacon',
     }
 
+    const { price, email, message, open, experiment } = this.state
+    const { EventuallyImage } = this.props.data
+
     return (
       <div>
 
-        <Container textAlign='center'>
+        <Container>
 
-          <Container as={styledJumbotron}>
-            <Header as={styledHeader}>Gatsby Manor</Header>
-            <StyledSubheader>
-              Professional design Gatsby starters at afforable prices.
-            </StyledSubheader>
+          <Menu text>
+            <Menu.Item as={Link} to="/">
+              Gatsby Manor
+            </Menu.Item>
+
+            <Menu.Item position="right">
+              <Button color='blue' onClick={this.show}>Subscribe</Button>
+            </Menu.Item>
+          </Menu>
+
+          <Modal size={'small'} open={open} onClose={this.close}>
+            <Modal.Header>Join our newsletter to get updates!</Modal.Header>
+
+            <Modal.Content>
+
+              <SubscribeForm
+                mailchimp_url={`https://gatsbymanor.us17.list-manage.com/subscribe/post-json?u=6d5879814f1b3ecd3667f0c47&amp;id=a66cece897`}
+                success_msg="Thanks for signing up! You will get a message when we have a new update!">
+                {(submitHandler, emailHandler) =>
+                  <React.Fragment>
+                    <p>
+                      Get notified when we release new starters
+                      and make other exciting announcements.
+                    </p>
+                    <input
+                      style={{
+                        borderWidth: `1px`,
+                        borderStyle: `solid`,
+                        borderRadius: `1px`,
+                        width: `250px`,
+                        padding: `0.7rem`,
+                        margin: `0 0.5rem 0 0`
+                      }}
+                      type="email"
+                      name="email"
+                      placeholder="you@email.com"
+                      onChange={emailHandler}
+                    />
+                    <Button
+                      type="submit"
+                      color='blue'
+                      onClick={(e) => submitHandler(e)}>
+                      Notify me
+                    </Button>
+                  </React.Fragment>
+                }
+              </SubscribeForm>
+            </Modal.Content>
+
+          </Modal>
+
+          <Container as={styledJumbotron} textAlign='center'>
+            <Header as={styledHeader}>Professional design Gatsby starters</Header>
           </Container>
 
-          <Grid centered columns={1}>
+          <Grid columns={1}>
             <Grid.Row>
               {this.state.links.map((obj, idx) => {
                 const { name, demo, perks } = obj;
-                const { price, email, message, open, experiment } = this.state
-                const { EventuallyImage } = this.props.data
 
                 const viewStarterEvent = {
                   hitType: 'event',
@@ -162,71 +214,26 @@ class IndexPage extends React.Component {
                   transport: 'beacon',
                 }
 
-                const buyStarterEvent = {
-                 hitType: 'event',
-                 eventCategory: 'starters',
-                 eventAction: `buy_${name}`,
-                 eventLabel: experiment,
-                 transport: 'beacon',
-               }
-
                 return (
                   <Grid.Column key={idx}>
                     <Card key={idx} as={StyledCard}>
-                      <Img
-                        title="Eventually gatsby starter"
-                        alt="Thumnail image of Eventually gatsby starter"
-                        sizes={EventuallyImage.sizes}
-                      />
+                      <Link to={demo} onClick={() => { this.trackClick(viewStarterEvent) }}>
+                        <Img
+                          title="Eventually gatsby starter"
+                          alt="Thumbnail image of Eventually gatsby starter"
+                          sizes={EventuallyImage.sizes}
+                        />
+                      </Link>
                       <Card.Content>
-                        <Card.Header>{name}</Card.Header>
+                        <Card.Header as={Link} to={demo} onClick={() => { this.trackClick(viewStarterEvent) }}>{name}</Card.Header>
                         <Card.Description>{perks}</Card.Description>
                       </Card.Content>
                       <Card.Content extra>
                         <Link to={demo} onClick={() => { this.trackClick(viewStarterEvent) }}>
-                          <Button basic color='green' fluid>View Demo</Button>
+                          <Button color='green' fluid>Preview</Button>
                         </Link>
                       </Card.Content>
-                      <Card.Content extra>
-                        <Button onClick={() => this.handleBuyClick(buyStarterEvent)} basic color='blue' fluid>Buy Starter</Button>
 
-                        <Modal size={'small'} open={open} onClose={this.close}>
-                          <Modal.Header>Hi! You caught us before we are ready.</Modal.Header>
-
-                          <Modal.Content>
-                            <p>
-                              We're working to hard to get you a high quality starter at a fair price.
-                              If you'd like us to send you a reminder when we're ready, tell us your desired
-                              price and your email.
-                            </p>
-
-                            <Form
-                              name={this.state.experiment}
-                              method="post"
-                              data-netlify="true"
-                              data-netlify-honeypot="bot-field"
-                              onSubmit={(e) => this.handleSubmit(e)}>
-
-                              <input type="hidden" name="form-name" value={this.state.experiment} />
-                              <Form.Field>
-                                <label>What do you want to pay? (in USD)</label>
-                                <input type="number" name="price" value={price} min="0" max="10000" onChange={this.handleChange} placeholder='99' />
-                              </Form.Field>
-                              <Form.Field>
-                                <label>Email (optional)</label>
-                                <input type="email" name="email" value={email} onChange={this.handleChange} placeholder='me@email.com'  />
-                              </Form.Field>
-                              <Form.Field>
-                                <label>Send us a note (optional)</label>
-                                <input type="text" name="message" value={message} onChange={this.handleChange} placeholder='Message' />
-                              </Form.Field>
-
-                              <Button type="submit" basic color='blue'>Notify me</Button>
-                            </Form>
-                          </Modal.Content>
-
-                        </Modal>
-                      </Card.Content>
                     </Card>
 
                   </Grid.Column>
@@ -235,11 +242,8 @@ class IndexPage extends React.Component {
             </Grid.Row>
           </Grid>
 
-          <Container as={styledJumbotron}>
-            <Container>
-              <Icon onClick={() => this.trackExternalClick(`https://twitter.com/thegatsbymanor`, twitterEvent)} as={StyledIcon} name="twitter" />
-              <Icon onClick={() => this.trackExternalClick(`http://eepurl.com/dzJSxL`, subscribeEvent)} as={StyledIcon} name="mail" />
-            </Container>
+          <Container as={styledJumbotron} textAlign='center'>
+            <Icon onClick={() => this.trackExternalClick(`https://twitter.com/thegatsbymanor`, twitterEvent)} as={StyledIcon} name="twitter" />
           </Container>
         </Container>
       </div>
