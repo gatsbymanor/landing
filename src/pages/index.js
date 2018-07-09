@@ -18,7 +18,7 @@ import {
 
 import { starters } from "../data/starters"
 import { SubscribeForm } from "../components/SubscribeForm"
-import { NetlifyForm } from "../components/NetlifyForm"
+import { JumprockForm } from "../components/JumprockForm"
 import { Link, graphql } from "gatsby"
 
 const styledJumbotron = styled(Container)`
@@ -231,7 +231,7 @@ class IndexPage extends React.Component {
                     Get your own starter
                   </Modal.Header>
                   <Modal.Content>
-                    <NetlifyForm
+                    <JumprockForm
                       formName={EXPERIMENT_NAME}
                       trackSubmitEvent={(event) => this.trackClick(event)}
                       EXPERIMENT={EXPERIMENT_NAME}
