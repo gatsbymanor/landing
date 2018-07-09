@@ -88,30 +88,15 @@ class SubscribeForm extends React.Component {
         ) : (
           <div>
             <form method="post" noValidate>
-              <div>
-                <input
+              {this.props.children(this._handleFormSubmit, this._handleEmailChange)}
+              {this.state.status === `error` && (
+                <div
                   style={{
-                    borderWidth: `1px`,
-                    borderStyle: `solid`,
-                    borderRadius: `2px`,
-                    width: `250px`,
-                    padding: `0.7rem`,
+                    color: 'red'
                   }}
-                  type="email"
-                  name="email"
-                  placeholder="you@email.com"
-                  onChange={this._handleEmailChange}
+                  dangerouslySetInnerHTML={{ __html: this.state.msg }}
                 />
-                {this.props.children(this._handleFormSubmit)}
-                {this.state.status === `error` && (
-                  <div
-                    style={{
-                      color: 'red'
-                    }}
-                    dangerouslySetInnerHTML={{ __html: this.state.msg }}
-                  />
-                )}
-              </div>
+              )}
             </form>
           </div>
         )}
