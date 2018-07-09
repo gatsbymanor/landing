@@ -5,7 +5,14 @@ import {
   Form,
 } from 'semantic-ui-react'
 
-class NetlifyForm extends React.Component {
+
+const encode = (data) => {
+  return Object.keys(data)
+    .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+}
+
+class JumprockForm extends React.Component {
 
   constructor(props) {
     super(props)
@@ -23,7 +30,7 @@ class NetlifyForm extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { formName, EXPERIMENT } = this.props
+    const { EXPERIMENT } = this.props
     const submitEvent = {
       hitType: 'event',
       eventCategory: 'starters',
@@ -34,28 +41,20 @@ class NetlifyForm extends React.Component {
 
     axios({
       method: 'post',
-      url: '/',
+      url: 'https://jumprock.co/mail/gatsbymanor',
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      data: this.encode({ "form-name": formName, ...this.state })
+      data: encode({ ...this.state })
     })
     .then((response) => {
       if (response.status === 200) {
         this.setState({ submitted: true })
-        this.trackSubmitEvent(submitEvent)
+        this.props.trackSubmitEvent(submitEvent)
       }
     })
     .catch((error) => {
       console.log(error);
     })
   }
-
-  encode = (data) => {
-    return Object.keys(data)
-      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
-  }
-
-
 
   render() {
 
@@ -79,12 +78,9 @@ class NetlifyForm extends React.Component {
 
             <Form
               name={formName}
-              method="post"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
               onSubmit={(e) => this.handleSubmit(e)}>
 
-              <input type="hidden" name="form-name" value={formName} />
+              <input type="text" name="trapit" value="" style={{ display: "none"}} />
               <Form.Field>
                 <label>Email</label>
                 <input type="email" name="email" value={email} onChange={this.handleChange} placeholder='me@email.com'  />
@@ -105,4 +101,4 @@ class NetlifyForm extends React.Component {
   }
 
 }
-export { NetlifyForm }
+export { JumprockForm }
