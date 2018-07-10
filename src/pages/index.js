@@ -124,7 +124,7 @@ class IndexPage extends React.Component {
             </Menu.Item>
 
             <Menu.Item position="right">
-              <Button color='blue' onClick={this.show}>Get updates</Button>
+              <Button color='blue' onClick={this.show}>Subscribe</Button>
             </Menu.Item>
           </Menu>
 
@@ -160,7 +160,7 @@ class IndexPage extends React.Component {
                       type="submit"
                       color='blue'
                       onClick={(e) => submitHandler(e)}>
-                      Send me updates
+                      Click to subscribe
                     </Button>
                   </React.Fragment>
                 }
