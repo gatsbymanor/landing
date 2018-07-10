@@ -110,7 +110,6 @@ class IndexPage extends React.Component {
 
   render() {
     const { open, requestStarterModal } = this.state
-    const { EventuallyImage } = this.props.data
 
     return (
       <div>
@@ -178,10 +177,11 @@ class IndexPage extends React.Component {
             </Header>
           </Container>
 
-          <Grid stackable columns={2}>
+          <Grid stackable columns={3}>
             <Grid.Row>
               {this.state.links.map((obj, idx) => {
-                const { name, demo, perks } = obj;
+                const { name, demo, perks, image, shortName } = obj;
+                const cardImage = this.props.data[shortName]
 
                 return (
                   <Grid.Column key={idx}>
@@ -190,9 +190,8 @@ class IndexPage extends React.Component {
                         <Img
                           title="Eventually gatsby starter"
                           alt="Thumbnail image of Eventually gatsby starter"
-                          sizes={EventuallyImage.sizes}
+                          sizes={cardImage.sizes}
                         />
-                        <Image />
                       </Link>
                       <Card.Content>
                         <Card.Header as={Link} to={demo} onClick={() => { this.trackViewStarter(name) }}>{name}</Card.Header>
@@ -262,8 +261,13 @@ class IndexPage extends React.Component {
 export default IndexPage
 
 export const pageQuery = graphql`
-  query EventuallyImageQuery {
-    EventuallyImage: imageSharp(id: { regex: "/eventually.jpg/" }) {
+  query ImageQuery {
+    eventually: imageSharp(id: { regex: "/eventually.jpg/" }) {
+      sizes(maxHeight: 600 ) {
+        ...GatsbyImageSharpSizes
+      }
+    }
+    dimension: imageSharp(id: { regex: "/dimension.jpg/" }) {
       sizes(maxHeight: 600 ) {
         ...GatsbyImageSharpSizes
       }
