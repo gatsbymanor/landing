@@ -180,7 +180,7 @@ class IndexPage extends React.Component {
           <Grid stackable columns={3}>
             <Grid.Row>
               {this.state.links.map((obj, idx) => {
-                const { name, demo, perks, image, shortName } = obj;
+                const { name, demo, perks, shortName } = obj;
                 const cardImage = this.props.data[shortName]
 
                 return (
