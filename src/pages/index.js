@@ -173,7 +173,7 @@ class IndexPage extends React.Component {
               style={{
                 fontSize: `2.5rem`
               }}>
-              Professional design Gatsby starters
+              Professional design Gatsby starter themes
             </Header>
           </Container>
 
