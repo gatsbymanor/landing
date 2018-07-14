@@ -115,65 +115,66 @@ class IndexPage extends React.Component {
       <div>
 
         <Container>
-
           <Menu text>
             <Menu.Item as={Link} to="/" style={{
               fontSize: `1.5rem`
             }}>
               Gatsby Manor
             </Menu.Item>
-
-            <Menu.Item position="right">
-              <Button color='blue' onClick={this.show}>Subscribe</Button>
-            </Menu.Item>
           </Menu>
-
-          <Modal size={'small'} open={open} onClose={this.close}>
-            <Modal.Header>Join our newsletter to get updates!</Modal.Header>
-
-            <Modal.Content>
-
-              <SubscribeForm
-                mailchimp_url={`https://gatsbymanor.us17.list-manage.com/subscribe/post-json?u=6d5879814f1b3ecd3667f0c47&amp;id=a66cece897`}
-                success_msg="Thanks for signing up! You will get a message when we have a new update!">
-                {(submitHandler, emailHandler) =>
-                  <React.Fragment>
-                    <p>
-                      Subscribe to get notified the next time we release new starters
-                      and make other exciting announcements. We promise not to spam.
-                    </p>
-                    <input
-                      style={{
-                        borderWidth: `1px`,
-                        borderStyle: `solid`,
-                        borderRadius: `1px`,
-                        width: `250px`,
-                        padding: `0.7rem`,
-                        margin: `0 0.5rem 0.5rem 0`
-                      }}
-                      type="email"
-                      name="email"
-                      placeholder="my@email.com"
-                      onChange={emailHandler}
-                    />
-                    <Button
-                      type="submit"
-                      color='blue'
-                      onClick={(e) => submitHandler(e)}>
-                      Click to subscribe
-                    </Button>
-                  </React.Fragment>
-                }
-              </SubscribeForm>
-            </Modal.Content>
-          </Modal>
 
           <Container as={styledJumbotron} textAlign='center'>
             <Header
               style={{
                 fontSize: `2.5rem`
               }}>
-              Professional design Gatsby starter themes
+              Themes for Gatsby
+            </Header>
+
+            <SubscribeForm
+              mailchimp_url={`https://gatsbymanor.us17.list-manage.com/subscribe/post-json?u=6d5879814f1b3ecd3667f0c47&amp;id=a66cece897`}
+              success_msg="Thanks for signing up! You will get a message when we have a new update!">
+              {(submitHandler, emailHandler) =>
+                <React.Fragment>
+                  <p style={{ fontSize: `1.5rem` }}>
+                    Hi there <span role='img' aria-label="greeting wave emoji">👋🏽</span>, you probably came here after reading our announcement article on Gatsbyjs.org.
+                    Our previous solution to Gatsby themes was hard to use <span role='img' aria-label="sweat smile emoji">😅</span>.
+                    We are working on a new solution built into Gatsby core <span role='img' aria-label="construction zone emoji">🚧🛠</span>.
+                    To be notified of our releases, join our newsletter.
+                    We promise not to spam <span role='img' aria-label="smile with halo emoji">😇</span>.
+                  </p>
+                  <input
+                    style={{
+                      borderWidth: `1px`,
+                      borderStyle: `solid`,
+                      borderRadius: `1px`,
+                      width: `250px`,
+                      padding: `0.7rem`,
+                      margin: `0 0.5rem 0.5rem 0`
+                    }}
+                    type="email"
+                    name="email"
+                    placeholder="my@email.com"
+                    onChange={emailHandler}
+                  />
+                  <Button
+                    type="submit"
+                    color='blue'
+                    onClick={(e) => submitHandler(e)}>
+                    Click to subscribe
+                  </Button>
+                </React.Fragment>
+              }
+            </SubscribeForm>
+
+          </Container>
+
+          <Container as={styledJumbotron} textAlign='center'>
+            <Header
+              style={{
+                fontSize: `2.5rem`
+              }}>
+              Starter themes (coming soon)
             </Header>
           </Container>
 
