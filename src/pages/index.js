@@ -3,7 +3,6 @@ import 'semantic-ui-css/semantic.min.css';
 import React from 'react'
 import Img from "gatsby-image"
 import styled from "styled-components";
-import chatAnim from '../images/chat.gif'
 import {
   Grid,
   Icon,
@@ -19,6 +18,7 @@ import {
 import { starters } from "../data/starters"
 import { SubscribeForm } from "../components/SubscribeForm"
 import { JumprockForm } from "../components/JumprockForm"
+import Layout from "../components/layout.js"
 import { Link, graphql } from "gatsby"
 
 const styledJumbotron = styled(Container)`
@@ -112,23 +112,14 @@ class IndexPage extends React.Component {
     const { open, requestStarterModal } = this.state
 
     return (
-      <div>
-
+      <Layout>
         <Container>
-          <Menu text>
-            <Menu.Item as={Link} to="/" style={{
-              fontSize: `1.5rem`
-            }}>
-              Gatsby Manor
-            </Menu.Item>
-          </Menu>
-
           <Container as={styledJumbotron} textAlign='center'>
             <Header
               style={{
-                fontSize: `2.5rem`
+                fontSize: `3rem`
               }}>
-              Themes for Gatsby
+              Learn how to use themes with Gatsby.
             </Header>
 
             <SubscribeForm
@@ -136,12 +127,8 @@ class IndexPage extends React.Component {
               success_msg="Thanks for signing up! You will get a message when we have a new update!">
               {(submitHandler, emailHandler) =>
                 <React.Fragment>
-                  <p style={{ fontSize: `1.5rem` }}>
-                    Hi there <span role='img' aria-label="greeting wave emoji">👋🏽</span>, you probably came here after reading our announcement article on Gatsbyjs.org.
-                    Our previous solution to Gatsby themes was hard to use <span role='img' aria-label="sweat smile emoji">😅</span>.
-                    We are working on a new solution built into Gatsby core <span role='img' aria-label="construction zone emoji">🚧🛠</span>.
-                    To be notified of our releases, join our newsletter.
-                    We promise not to spam <span role='img' aria-label="smile with halo emoji">😇</span>.
+                  <p style={{ fontSize: `1.2rem` }}>
+                    Get updates on new theme announcements in your inbox!
                   </p>
                   <input
                     style={{
@@ -169,16 +156,7 @@ class IndexPage extends React.Component {
 
           </Container>
 
-          <Container as={styledJumbotron} textAlign='center'>
-            <Header
-              style={{
-                fontSize: `2.5rem`
-              }}>
-              Starter themes (coming soon)
-            </Header>
-          </Container>
-
-          <Grid stackable columns={3}>
+          <Grid stackable columns={1}>
             <Grid.Row>
               {this.state.links.map((obj, idx) => {
                 const { name, demo, perks, shortName } = obj;
@@ -208,6 +186,7 @@ class IndexPage extends React.Component {
                 )
               })}
 
+              {/*
               <Grid.Column>
                 <Card as={StyledCard}>
                   <Link onClick={this.showRequestStarterModal} to="/">
@@ -240,6 +219,7 @@ class IndexPage extends React.Component {
 
                 </Modal>
               </Grid.Column>
+              */}
 
             </Grid.Row>
           </Grid>
@@ -252,7 +232,7 @@ class IndexPage extends React.Component {
             <Icon onClick={this.goToTwitter} as={StyledIcon} name="twitter" />
           </Container>
         </Container>
-      </div>
+      </Layout>
     )
   }
 
@@ -263,13 +243,18 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query ImageQuery {
-    eventually: imageSharp(id: { regex: "/eventually.jpg/" }) {
-      sizes(maxHeight: 600 ) {
-        ...GatsbyImageSharpSizes
-      }
-    }
-    dimension: imageSharp(id: { regex: "/dimension.jpg/" }) {
-      sizes(maxHeight: 600 ) {
+    # eventually: imageSharp(id: { regex: "/eventually.jpg/" }) {
+    #   sizes(maxHeight: 600 ) {
+    #     ...GatsbyImageSharpSizes
+    #   }
+    # }
+    # dimension: imageSharp(id: { regex: "/dimension.jpg/" }) {
+    #   sizes(maxHeight: 600 ) {
+    #     ...GatsbyImageSharpSizes
+    #   }
+    # }
+    identity: imageSharp(id: { regex: "/identity.jpg/" }) {
+      sizes(maxWidth: 600) {
         ...GatsbyImageSharpSizes
       }
     }
