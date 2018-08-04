@@ -128,7 +128,7 @@ class IndexPage extends React.Component {
               {(submitHandler, emailHandler) =>
                 <React.Fragment>
                   <p style={{ fontSize: `1.2rem` }}>
-                    Get updates on new theme announcements in your inbox!
+                    We have a few themes now but subscribe for updates when we add themes, and new features.
                   </p>
                   <input
                     style={{
