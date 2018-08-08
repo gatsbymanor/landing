@@ -25,7 +25,10 @@ Note: You might need to uninstall the official `gatsby-cli` tool.
 5. Build your theme
   > `gatsby build --enabled-themes`
 
-6. Test your built theme project locally
+6. Copy the target theme for production
+  > `gatsby build --copy-theme gatsby-theme-identity`
+
+7. Test your built theme project locally
   > `gatsby serve`
 
 ### Next Steps
