@@ -38,6 +38,11 @@ const Layout = ({ children, data }) => (
           }}>
             Docs
           </Menu.Item>
+          <Menu.Item as={Link} to="/tutorial" style={{
+            fontSize: `1.2rem`
+          }}>
+            Tutorial
+          </Menu.Item>
         </Menu>
       </Container>
       {children}
