@@ -1,56 +1,35 @@
 ---
 path: /tutorial/part-zero
-title: Configure your themes
+title: Getting started with Gatsby themes
 ---
 
-The following tutorial builds on the [quick start](/docs) guide. Please complete the guide
-before you proceed with this tutorial.
+### Install our forked gatsby-cli tool
+`$ npm i -g @nodox/gatsby-cli`
 
-## Using `gatsby-themes.yaml`
-You need to configure your themes in `gatsby-themes.yaml` (create this file if not present).
-  >  
-    themesDirectory: themes
-    themes:
-      gatsby-theme-identity:
-        cms: contentful
-        develop: true
-        build: true
-        query:
-        mappings:
-          displayName:
-            querySource:
-            field:
-          copyright:
-            querySource:
-            field:
-          headline:
-            querySource:
-            field:
-          displayPhoto:
-            querySource:
-            field:
-          socialIcons:
-            querySource:
-            field:
-          backgroundImage:
-            querySource:
-            field:
-        styles:
+Note: You might need to uninstall the official `gatsby-cli` tool.
 
+### Using @nodox/gatsby-cli tool
 
-Here is the purpose of the top level properties.</p>
-  * `themesDirectory` - tells gatsby where all the themes are stored.
-  * `themes` - takes a list of theme configurations
+1. Create a new themes project
+  > `gatsby new gatsbymanor/gatsby-themes-starter`
 
-Here is the purpose of each theme configuration</p>
-  * `cms` - tells gatsby what source plugin to use for our cms. Currently only supports [Contentful](https://www.contentful.com)
-  * `develop` - tells gatsby to develop this theme in a new port during `$ gatsby develop --enabled-themes`. We can support parallel theme development if this property is true for each theme.
-  * `build` - tells gatsby to build this theme during `$ gatsby build --enabled-themes`
-  * `query` - tells gatsby what graphql query to use on our data source. The same query you use in your components can be used here.
-  * `mappings` - tells gatsby how to map data sources from a query to template fields. This is our we overwrite a themes default values with our cms data. The keys denote the content fields you can modify on the theme. These keys will differ between themes.
-  * `styles` - tells gatsby how to customize the styles of your theme. Takes regular css and applies it to the theme. Supports live-reload on save.
+2. Change directory to your project
+  > `cd gatsby-themes-starter`
 
-### Next steps
-* [Part 1: Add your content to a template](/tutorial/part-one)
+3. Install your theme
+  > `gatsby new themes/gatsby-theme-identity gatsbymanor/gatsby-theme-identity`
 
-Send your feedback using Twitter [@TheGatsbyManor](https://twitter.com/thegatsbymanor)
+4. Develop your theme
+  > `gatsby develop --enabled-themes`
+
+5. Build your theme
+  > `gatsby build --enabled-themes`
+
+6. Copy the target theme for production
+  > `gatsby build --copy-theme gatsby-theme-identity`
+
+7. Test your built theme project locally
+  > `gatsby serve`
+
+### Next Steps
+* [Configure your theme](/tutorial/part-one)
