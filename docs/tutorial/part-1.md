@@ -1,109 +1,52 @@
 ---
 path: /tutorial/part-one
-title: Add data from Contentful
+title: Configure your theme
 ---
 
-**NOTE**: This query will NOT work as its an example. Please supply a valid query from your contentful data.
-Themes only supports [Contentful](https://contentful.com). Please create an account before you proceed.
-
-The query section takes a multi-line string for your graphql query.
-The mappings section is where you specify what default fields your data will overwrite on the template.
-
-Add your graphql query with the proper data mappings.
-Develop your theme with CMS data using the proper Contenful credentials.
-  > `CONTENTFUL_SPACE_ID=YOUR_SPACE_ID CONTENTFUL_DELIVERY_TOKEN=YOUR_TOKEN gatsby develop --enabled-themes`
-
->  
+You need to configure your themes in `gatsby-themes.yaml` (create this file if not present).
+  >  
     themesDirectory: themes
     themes:
       gatsby-theme-identity:
         cms: contentful
         develop: true
         build: true
-        query: |
-          {
-            contentfulBio (
-              name: {
-                regex: "/identity/i"
-              }
-            )
-            {
-              name
-              displayName
-              headline
-              photo {
-                sizes {
-                  src
-                }
-              }
-            }
-
-            allContentfulSocialProfiles (
-              filter: {
-                name: {
-                  regex: "/(github|medium|twitter)/i"
-                }
-              }
-            )
-            {
-              edges {
-                node {
-                  name
-                  url
-                  className
-                }
-              }
-            }
-
-
-            bgPhoto: contentfulAsset (
-              title: {
-                regex: "/(nyc)/i"
-              }
-            )
-            {
-              title
-              sizes(maxWidth: 1200, quality: 95) {
-                src
-              }
-            }
-
-            avatarPhoto: contentfulAsset (
-              title: {
-                regex: "/(me)/i"
-              }
-            )
-            {
-              title
-              sizes(maxWidth: 120, quality: 95) {
-                src
-              }
-            }
-
-          }
+        query:
         mappings:
           displayName:
-            querySource: contentfulBio
-            field: displayName
+            querySource:
+            field:
           copyright:
-            querySource: contentfulBio
-            field: displayName
+            querySource:
+            field:
           headline:
-            querySource: contentfulBio
-            field: headline
+            querySource:
+            field:
           displayPhoto:
-            querySource: avatarPhoto
-            field: sizes
+            querySource:
+            field:
           socialIcons:
-            querySource: allContentfulSocialProfiles
-            field: edges
+            querySource:
+            field:
           backgroundImage:
-            querySource: bgPhoto
-            field: sizes
+            querySource:
+            field:
         styles:
 
 
+Here is the purpose of the top level properties.</p>
+  * `themesDirectory` - tells gatsby where all the themes are stored.
+  * `themes` - takes a list of theme configurations
+
+Here is the purpose of each theme configuration</p>
+  * `cms` - tells gatsby what source plugin to use for our cms. Currently only supports [Contentful](https://www.contentful.com)
+  * `develop` - tells gatsby to develop this theme in a new port during `$ gatsby develop --enabled-themes`. We can support parallel theme development if this property is true for each theme.
+  * `build` - tells gatsby to build this theme during `$ gatsby build --enabled-themes`
+  * `query` - tells gatsby what graphql query to use on our data source. The same query you use in your components can be used here.
+  * `mappings` - tells gatsby how to map data sources from a query to template fields. This is our we overwrite a themes default values with our cms data. The keys denote the content fields you can modify on the theme. These keys will differ between themes.
+  * `styles` - tells gatsby how to customize the styles of your theme. Takes regular css and applies it to the theme. Supports live-reload on save.
+
 ### Next steps
-* [Part 2: Customize styles on a theme](/tutorial/part-two).
+* [Add your content to a template](/tutorial/part-two)
 
 Send your feedback using Twitter [@TheGatsbyManor](https://twitter.com/thegatsbymanor)
