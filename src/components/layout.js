@@ -28,7 +28,7 @@ const Layout = ({ children, data }) => (
           }}>
             Gatsby Manor
           </Menu.Item>
-          <Menu.Item as={Link} to="/" style={{
+          {/* <Menu.Item as={Link} to="/" style={{
             fontSize: `1.2rem`
           }}>
             Home
@@ -42,7 +42,7 @@ const Layout = ({ children, data }) => (
             fontSize: `1.2rem`
           }}>
             Tutorial
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Container>
       {children}
