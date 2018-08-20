@@ -3,6 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import React from 'react'
 import Img from "gatsby-image"
 import styled from "styled-components";
+import chatAnim from '../images/chat.gif'
 import {
   Grid,
   Icon,
@@ -18,7 +19,6 @@ import {
 import { starters } from "../data/starters"
 import { SubscribeForm } from "../components/SubscribeForm"
 import { JumprockForm } from "../components/JumprockForm"
-import Layout from "../components/layout.js"
 import { Link, graphql } from "gatsby"
 
 const styledJumbotron = styled(Container)`
@@ -112,14 +112,23 @@ class IndexPage extends React.Component {
     const { open, requestStarterModal } = this.state
 
     return (
-      <Layout>
+      <div>
+
         <Container>
+          <Menu text>
+            <Menu.Item as={Link} to="/" style={{
+              fontSize: `1.5rem`
+            }}>
+              Gatsby Manor
+            </Menu.Item>
+          </Menu>
+
           <Container as={styledJumbotron} textAlign='center'>
             <Header
               style={{
-                fontSize: `3rem`
+                fontSize: `2.5rem`
               }}>
-              Learn how to use themes with Gatsby.
+              Themes for Gatsby
             </Header>
 
             <SubscribeForm
@@ -127,8 +136,12 @@ class IndexPage extends React.Component {
               success_msg="Thanks for signing up! You will get a message when we have a new update!">
               {(submitHandler, emailHandler) =>
                 <React.Fragment>
-                  <p style={{ fontSize: `1.2rem` }}>
-                    We have a few themes now but subscribe for updates when we add themes, and new features.
+                  <p style={{ fontSize: `1.5rem` }}>
+                    Hi there <span role='img' aria-label="greeting wave emoji">👋🏽</span>, you probably came here after reading our announcement article on Gatsbyjs.org.
+                    Our previous solution to Gatsby themes was hard to use <span role='img' aria-label="sweat smile emoji">😅</span>.
+                    We are working on a new solution built into Gatsby core <span role='img' aria-label="construction zone emoji">🚧🛠</span>.
+                    To be notified of our releases, join our newsletter.
+                    We promise not to spam <span role='img' aria-label="smile with halo emoji">😇</span>.
                   </p>
                   <input
                     style={{
@@ -156,40 +169,21 @@ class IndexPage extends React.Component {
 
           </Container>
 
-          <Grid stackable columns={1}>
+          <Container as={styledJumbotron} textAlign='center'>
+            <Header
+              style={{
+                fontSize: `2.5rem`
+              }}>
+              Starter Themes (coming soon)
+            </Header>
+          </Container>
+
+          {/* <Grid stackable columns={1}>
             <Grid.Row>
-              {this.state.links.map((obj, idx) => {
-                const { name, demo, perks, shortName } = obj;
-                const cardImage = this.props.data[shortName]
 
-                return (
-                  <Grid.Column key={idx}>
-                    <Card key={idx} as={StyledCard}>
-                      <Link to={demo} onClick={() => { this.trackViewStarter(name) }}>
-                        <Img
-                          title="Eventually gatsby starter"
-                          alt="Thumbnail image of Eventually gatsby starter"
-                          sizes={cardImage.sizes}
-                        />
-                      </Link>
-                      <Card.Content>
-                        <Card.Header as={Link} to={demo} onClick={() => { this.trackViewStarter(name) }}>{name}</Card.Header>
-                        <Card.Description>{perks}</Card.Description>
-                      </Card.Content>
-                      <Card.Content extra>
-                        <Link to={demo} onClick={() => { this.trackViewStarter(name) }}>
-                          <Button color='green' fluid>Preview</Button>
-                        </Link>
-                      </Card.Content>
-                    </Card>
-                  </Grid.Column>
-                )
-              })}
-
-              {/*
               <Grid.Column>
                 <Card as={StyledCard}>
-                  <Link onClick={this.showRequestStarterModal} to="/">
+                  <Link to="/">
                     <Image
                       title="Eventually gatsby starter"
                       alt="Thumbnail image of Eventually gatsby starter"
@@ -197,32 +191,15 @@ class IndexPage extends React.Component {
                     />
                   </Link>
                   <Card.Content>
-                    <Card.Header as={Link} to="/" onClick={this.showRequestStarterModal}>Need a custom starter?</Card.Header>
+                    <Card.Header as={Link} to="/">Need a custom starter?</Card.Header>
                     <Card.Description>Contact us</Card.Description>
-                  </Card.Content>
-                  <Card.Content extra>
-                    <Button color='blue' fluid  onClick={this.showRequestStarterModal}>Request a starter</Button>
                   </Card.Content>
                 </Card>
 
-                <Modal size={'small'} open={requestStarterModal} onClose={this.closeRequestStarterModal}>
-                  <Modal.Header>
-                    Get your own starter
-                  </Modal.Header>
-                  <Modal.Content>
-                    <JumprockForm
-                      formName={EXPERIMENT_NAME}
-                      trackSubmitEvent={(event) => this.trackClick(event)}
-                      EXPERIMENT={EXPERIMENT_NAME}
-                    />
-                  </Modal.Content>
-
-                </Modal>
               </Grid.Column>
-              */}
 
             </Grid.Row>
-          </Grid>
+          </Grid> */}
 
           <Container
             textAlign='center'
@@ -232,7 +209,7 @@ class IndexPage extends React.Component {
             <Icon onClick={this.goToTwitter} as={StyledIcon} name="twitter" />
           </Container>
         </Container>
-      </Layout>
+      </div>
     )
   }
 
@@ -241,22 +218,17 @@ class IndexPage extends React.Component {
 
 export default IndexPage
 
-export const pageQuery = graphql`
-  query ImageQuery {
-    # eventually: imageSharp(id: { regex: "/eventually.jpg/" }) {
-    #   sizes(maxHeight: 600 ) {
-    #     ...GatsbyImageSharpSizes
-    #   }
-    # }
-    # dimension: imageSharp(id: { regex: "/dimension.jpg/" }) {
-    #   sizes(maxHeight: 600 ) {
-    #     ...GatsbyImageSharpSizes
-    #   }
-    # }
-    identity: imageSharp(id: { regex: "/identity.jpg/" }) {
-      sizes(maxWidth: 600) {
-        ...GatsbyImageSharpSizes
-      }
-    }
-  }
-`
+// export const pageQuery = graphql`
+//   query ImageQuery {
+//     eventually: imageSharp(id: { regex: "/eventually.jpg/" }) {
+//       sizes(maxHeight: 600 ) {
+//         ...GatsbyImageSharpSizes
+//       }
+//     }
+//     dimension: imageSharp(id: { regex: "/dimension.jpg/" }) {
+//       sizes(maxHeight: 600 ) {
+//         ...GatsbyImageSharpSizes
+//       }
+//     }
+//   }
+// `
