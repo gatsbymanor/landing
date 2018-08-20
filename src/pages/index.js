@@ -178,7 +178,7 @@ class IndexPage extends React.Component {
             </Header>
           </Container>
 
-          <Grid stackable columns={1}>
+          {/* <Grid stackable columns={1}>
             <Grid.Row>
 
               <Grid.Column>
@@ -199,7 +199,7 @@ class IndexPage extends React.Component {
               </Grid.Column>
 
             </Grid.Row>
-          </Grid>
+          </Grid> */}
 
           <Container
             textAlign='center'
