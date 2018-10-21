@@ -136,11 +136,7 @@ class IndexPage extends React.Component {
                 {(submitHandler, emailHandler) =>
                   <React.Fragment>
                     <p style={{ fontSize: `1.5rem` }}>
-                      Hi there <span role='img' aria-label="greeting wave emoji">👋🏽</span>, you probably came here after reading our announcement article on Gatsbyjs.org.
-                      Our previous solution to Gatsby themes was hard to use <span role='img' aria-label="sweat smile emoji">😅</span>.
-                      We are working on a new solution built into Gatsby core <span role='img' aria-label="construction zone emoji">🚧🛠</span>.
-                      To be notified of our releases, join our newsletter.
-                      We promise not to spam <span role='img' aria-label="smile with halo emoji">😇</span>.
+                      {this.props.data.landingCopy.body.body}
                     </p>
                     <input
                       style={{
@@ -295,6 +291,12 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query ImageQuery {
+    landingCopy: contentfulPage(title: { eq: "[v2][testing] Home page copy" }) {
+      title
+      body {
+        body
+      }
+    }
     readOnly: imageSharp(id: { regex: "/read-only.jpg/" }) {
       sizes(maxWidth: 600) {
         src

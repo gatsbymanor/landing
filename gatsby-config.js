@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const googleTrackingCode = (process.env.NODE_ENV === `production`) ? "UA-113726758-1" : "UA-113726758-2"
 
 module.exports = {
@@ -13,17 +15,17 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `gatsby-source-contentful`,
       options: {
-        name: `img`,
-        path: `${__dirname}/src/images/`,
-      }
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `docs`,
-        path: `${__dirname}/docs/`,
+        name: `img`,
+        path: `${__dirname}/src/images/`,
       }
     },
     `gatsby-transformer-remark`,
