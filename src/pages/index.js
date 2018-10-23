@@ -127,7 +127,7 @@ class IndexPage extends React.Component {
                 style={{
                   fontSize: `2.5rem`
                 }}>
-                Themes for Gatsby
+                {this.props.data.landingCopy.ctaHeader}
               </Header>
 
               <SubscribeForm
@@ -136,7 +136,7 @@ class IndexPage extends React.Component {
                 {(submitHandler, emailHandler) =>
                   <React.Fragment>
                     <p style={{ fontSize: `1.5rem` }}>
-                      {this.props.data.landingCopy.body.body}
+                      {this.props.data.landingCopy.ctaBody.ctaBody}
                     </p>
                     <input
                       style={{
@@ -291,12 +291,13 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query ImageQuery {
-    landingCopy: contentfulPage(title: { eq: "[v2][testing] Home page copy" }) {
-      title
-      body {
-        body
+    landingCopy: contentfulCallToAction(title: { eq: "[v2] [test] Home page copy with keywords" }) {
+      ctaHeader
+      ctaBody {
+        ctaBody
       }
     }
+
     readOnly: imageSharp(id: { regex: "/read-only.jpg/" }) {
       sizes(maxWidth: 600) {
         src
