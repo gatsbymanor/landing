@@ -1,0 +1,21 @@
+@mixin HeightAndWidth100() {
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  @include HeightAndWidth100;
+}
+
+body {
+  @include HeightAndWidth100;
+}
+
+#___gatsby {
+  @include HeightAndWidth100;
+
+  & > div {
+    @include HeightAndWidth100;
+    display: grid;
+  }
+}
