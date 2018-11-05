@@ -8,6 +8,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sass',
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -20,13 +21,6 @@ module.exports = {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
         accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
       },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `img`,
-        path: `${__dirname}/src/images/`,
-      }
     },
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
