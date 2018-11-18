@@ -1,3 +1,5 @@
+import 'semantic-ui-css/semantic.min.css'
+
 import React from "react"
 import Iframe from "react-iframe"
 import { graphql, Link } from "gatsby"
