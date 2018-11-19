@@ -13,6 +13,8 @@ import { graphql } from "gatsby"
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
+  .async-hide { opacity: 0 !important } 
+
   html,
   body,
   #___gatsby,
