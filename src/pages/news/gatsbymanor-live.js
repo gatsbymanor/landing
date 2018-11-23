@@ -2,8 +2,9 @@ import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
 import React from 'react'
 import { graphql, Link } from "gatsby"
+import Img from "gatsby-image"
 import { createGlobalStyle } from 'styled-components'
-import { Navbar, Nav, Button, Jumbotron } from "react-bootstrap"
+import { Navbar, Nav, Button, Jumbotron, Container, Grid, Row, Col } from "react-bootstrap"
 
 import { SubscribeForm } from "../../components/SubscribeForm"
 
@@ -19,9 +20,10 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
-  #___gatsby > div {
-    display: grid;
+  body {
+    background: black;
   }
+
 `
 
 
@@ -48,6 +50,7 @@ class IndexPage extends React.Component {
           <Jumbotron style={{ 
             textAlign: "center",
             background: "white",
+            borderRadius: "0",
           }}>
             <h1>{this.props.data.landingCopy.ctaHeader}</h1>
               <SubscribeForm
@@ -83,6 +86,23 @@ class IndexPage extends React.Component {
               </SubscribeForm>
           </Jumbotron>
 
+          <Container>
+            <Row>
+              {this.props.data.themes.edges.map(({ node }) => {
+                const { name, waitlistUrl, demoUrl, demoImage } = node
+
+                const { fluid } = demoImage
+                return (
+                  <Col sm={12} style={{ margin: "2rem 0" }}>
+                    <Link to={`/demo/${name}`}>
+                      <Img fluid={fluid} />
+                    </Link>
+                  </Col>
+                )
+              })}
+            </Row>
+          </Container>
+
         </div>
       )
     }
@@ -100,5 +120,31 @@ export const pageQuery = graphql`
         ctaBody
       }
     }
+
+    themes: allContentfulGatsbyTheme {
+      edges {
+        node {
+          description {
+            description
+          }
+          demoUrl
+          name
+          waitlistUrl
+          demoImage {
+            fluid {
+              base64
+              tracedSVG
+              aspectRatio
+              src
+              srcSet
+              srcWebp
+              srcSetWebp
+              sizes
+            }
+          }
+        }
+      }
+    }
+
   }
 `
