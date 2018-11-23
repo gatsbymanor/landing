@@ -60,7 +60,7 @@ class IndexPage extends React.Component {
                   <React.Fragment>
                     <div style={{ 
                       fontSize: "1.2rem",
-                      width: "85%",
+                      width: "75%",
                       margin: "auto",
                       paddingBottom: "1rem",
                     }}>
