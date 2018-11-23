@@ -1,23 +1,32 @@
-import 'semantic-ui-css/semantic.min.css'
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
 import React from "react"
 import Iframe from "react-iframe"
 import { graphql, Link } from "gatsby"
-import { Menu, Icon, Button } from "semantic-ui-react"
+import { Navbar, Nav, Button } from "react-bootstrap"
 
 export default ({ data }) => {
   const { name, demoUrl } = data.gatsbyTheme
 
   return (
     <React.Fragment>
-      <Menu style={{ 'margin': 0 }}>
-        <Menu.Item as={`a`} href={`https://gatsbymanor.com/products/${name}`}>
-          <Icon name="angle left" /> Back to Gatsby Manor
-        </Menu.Item>
-        <Menu.Item as={Link} to={`/demo/${name}/waitlist`}>
-          <Button color="blue">Add me to the waitlist!</Button>
-        </Menu.Item>
-      </Menu>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand as={Link} to={`/news/gatsbymanor-live`}>Gatsby Manor</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to={`/news/gatsbymanor-live`}>
+              Home
+            </Nav.Link>
+          </Nav>
+          <Link to={`/demo/${name}/waitlist`} style={{ color: "white" }}>
+            <Button variant="primary">
+                Add me to the waitlist!
+            </Button>
+          </Link>
+        </Navbar.Collapse>
+      </Navbar>
+
       <Iframe url={demoUrl} />
     </React.Fragment>
   )
