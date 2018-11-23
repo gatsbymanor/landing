@@ -91,11 +91,10 @@ class IndexPage extends React.Component {
               {this.props.data.themes.edges.map(({ node }) => {
                 const { name, waitlistUrl, demoUrl, demoImage } = node
 
-                const { fluid } = demoImage
                 return (
                   <Col sm={12} style={{ margin: "2rem 0" }}>
                     <Link to={`/demo/${name}`}>
-                      <Img fluid={fluid} />
+                      <Img fluid={demoImage.fluid} />
                     </Link>
                   </Col>
                 )
@@ -133,7 +132,6 @@ export const pageQuery = graphql`
           demoImage {
             fluid {
               base64
-              tracedSVG
               aspectRatio
               src
               srcSet
