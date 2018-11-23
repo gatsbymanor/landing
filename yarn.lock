@@ -4997,9 +4997,9 @@ gatsby-plugin-sharp@^1.6.48:
     sharp "^0.20.0"
     svgo "^0.7.2"
 
-gatsby-plugin-sharp@^2.0.12:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.0.12.tgz#c791b29f153e481b8287605bf171331daaba7cb8"
+gatsby-plugin-sharp@^2.0.13:
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-2.0.13.tgz#37678879e118987841453ef2f1250a0760402646"
   dependencies:
     "@babel/runtime" "^7.0.0"
     async "^2.1.2"
@@ -5026,9 +5026,9 @@ gatsby-react-router-scroll@^2.0.1:
     scroll-behavior "^0.9.9"
     warning "^3.0.0"
 
-gatsby-source-contentful@^2.0.14:
-  version "2.0.14"
-  resolved "https://registry.yarnpkg.com/gatsby-source-contentful/-/gatsby-source-contentful-2.0.14.tgz#1883a7bfe23ec208267f67ff9d33a65232d1ad20"
+gatsby-source-contentful@^2.0.15:
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/gatsby-source-contentful/-/gatsby-source-contentful-2.0.15.tgz#a51777bf0d4f9a9e6f2467aa02204028a7d28841"
   dependencies:
     "@babel/runtime" "^7.0.0"
     axios "^0.18.0"
@@ -5037,7 +5037,7 @@ gatsby-source-contentful@^2.0.14:
     contentful "^6.1.0"
     deep-map "^1.5.0"
     fs-extra "^4.0.2"
-    gatsby-plugin-sharp "^2.0.12"
+    gatsby-plugin-sharp "^2.0.13"
     is-online "^7.0.0"
     json-stringify-safe "^5.0.1"
     lodash "^4.17.10"
