@@ -21,7 +21,7 @@ export default ({ data }) => {
           </Nav>
           <Link to={`/demo/${name}/waitlist`} style={{ color: "white" }}>
             <Button variant="primary">
-                Add me to the waitlist!
+                {`Notify me when ${name} is ready!`}
             </Button>
           </Link>
         </Navbar.Collapse>

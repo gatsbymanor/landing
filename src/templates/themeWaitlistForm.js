@@ -3,10 +3,10 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import React from "react"
 import Iframe from "react-iframe"
 import { graphql, Link } from "gatsby"
-import { Navbar, Nav, Button } from "react-bootstrap"
+import { Navbar, Nav } from "react-bootstrap"
 
 export default ({ data }) => {
-  const { name, waitlistUrl } = data.gatsbyTheme
+  const { waitlistUrl } = data.gatsbyTheme
 
   return (
     <React.Fragment>
