@@ -4,7 +4,7 @@ import React from 'react'
 import { graphql, Link } from "gatsby"
 import Img from "gatsby-image"
 import { createGlobalStyle } from 'styled-components'
-import { Navbar, Nav, Button, Jumbotron, Container, Grid, Row, Col } from "react-bootstrap"
+import { Navbar, Nav, Button, Jumbotron, Container, Row, Col } from "react-bootstrap"
 
 import { SubscribeForm } from "../../components/SubscribeForm"
 
@@ -58,16 +58,21 @@ class IndexPage extends React.Component {
                 success_msg="Thank you! You will get your discount code via email shortly!">
                 {(submitHandler, emailHandler) =>
                   <React.Fragment>
-                    <p style={{ fontSize: `1.5rem` }}>
+                    <div style={{ 
+                      fontSize: "1.2rem",
+                      width: "85%",
+                      margin: "auto",
+                      paddingBottom: "1rem",
+                    }}>
                       {this.props.data.landingCopy.ctaBody.ctaBody}
-                    </p>
+                    </div>
                     <input
                       style={{
                         borderWidth: `1px`,
                         borderStyle: `solid`,
                         borderRadius: `1px`,
                         width: `250px`,
-                        padding: `0.7rem`,
+                        padding: `0.4rem`,
                         margin: `0 0.5rem 0.5rem 0`
                       }}
                       type="email"
@@ -88,11 +93,11 @@ class IndexPage extends React.Component {
 
           <Container>
             <Row>
-              {this.props.data.themes.edges.map(({ node }) => {
-                const { name, waitlistUrl, demoUrl, demoImage } = node
+              {this.props.data.themes.edges.map(({ node }, idx) => {
+                const { name, demoImage } = node
 
                 return (
-                  <Col sm={12} style={{ margin: "2rem 0" }}>
+                  <Col key={idx} sm={12} style={{ margin: "2rem 0" }}>
                     <Link to={`/demo/${name}`}>
                       <Img fluid={demoImage.fluid} />
                     </Link>
@@ -113,7 +118,7 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query NewShopImageQuery {
-    landingCopy: contentfulCallToAction(title: { eq: "[v1][shop] send to shop" }) {
+    landingCopy: contentfulCallToAction(title: { eq: "[v3] join waitlist" }) {
       ctaHeader
       ctaBody {
         ctaBody
