@@ -1,16 +1,12 @@
-import 'semantic-ui-css/semantic.min.css'
-import React from 'react'
+import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css"
 
-import {
-  Container,
-  Header,
-  Button,
-  Menu,
-} from 'semantic-ui-react'
+import React from 'react'
+import { graphql, Link } from "gatsby"
+import { createGlobalStyle } from 'styled-components'
+import { Navbar, Nav, Button, Jumbotron } from "react-bootstrap"
 
 import { SubscribeForm } from "../../components/SubscribeForm"
-import { graphql } from "gatsby"
-import { createGlobalStyle } from 'styled-components'
+
 
 const GlobalStyle = createGlobalStyle`
   .async-hide { opacity: 0 !important } 
@@ -37,25 +33,23 @@ class IndexPage extends React.Component {
         <div>
           <GlobalStyle />
 
-          <Container>
-            <Menu text>
-              <Menu.Item style={{
-                fontSize: `1.5rem`
-              }}>
-                Gatsby Manor
-              </Menu.Item>
-            </Menu>
-          </Container>
+          <Navbar bg="light" expand="lg">
+            <Navbar.Brand as={Link} to={`/news/gatsbymanor-live`}>Gatsby Manor</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link as={Link} to={`/news/gatsbymanor-live`}>
+                  Home
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
 
-          <Container>
-            <Container textAlign='center'>
-              <Header
-                style={{
-                  fontSize: `2.5rem`
-                }}>
-                {this.props.data.landingCopy.ctaHeader}
-              </Header>
-
+          <Jumbotron style={{ 
+            textAlign: "center",
+            background: "white",
+          }}>
+            <h1>{this.props.data.landingCopy.ctaHeader}</h1>
               <SubscribeForm
                 mailchimp_url={`https://gatsbymanor.us17.list-manage.com/subscribe/post-json?u=6d5879814f1b3ecd3667f0c47&amp;id=433682c973`}
                 success_msg="Thank you! You will get your discount code via email shortly!">
@@ -80,28 +74,15 @@ class IndexPage extends React.Component {
                     />
                     <Button
                       type="submit"
-                      color='blue'
+                      variant="primary"
                       onClick={(e) => submitHandler(e)}>
                       Click to subscribe
                     </Button>
                   </React.Fragment>
                 }
               </SubscribeForm>
-            </Container>
+          </Jumbotron>
 
-            <Container
-              textAlign='center'
-              style={{
-                margin: `5rem 0`
-              }}>
-              <div style={{
-                fontSize: `1.5rem`,
-                textAlign: "center",
-              }}>
-                <a href="https://gatsbymanor.com">Subscribe then click here to visit the gatsby themes shop!</a>
-              </div>
-            </Container>
-          </Container>
         </div>
       )
     }
