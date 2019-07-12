@@ -21,6 +21,7 @@ module.exports = {
         accessToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
       },
     },
+    `gatsby-plugin-netlify`,
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
