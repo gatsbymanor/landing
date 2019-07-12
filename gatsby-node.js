@@ -1,7 +1,7 @@
 const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage, createRedirect } = actions
   
   const allGatsbyThemesQuery = `
     {
@@ -44,6 +44,20 @@ exports.createPages = async ({ graphql, actions }) => {
 
 
   })
+
+  // Redirect to actual site
+  createRedirect({
+    fromPath: "/",
+    toPath: "https://gatsbymanor.com/",
+    statusCode: 302,
+  })
+
+  createRedirect({
+    fromPath: "/news/gatsbymanor-live/",
+    toPath: "https://gatsbymanor.com/",
+    statusCode: 302,
+  })
+
 
   return
 }
